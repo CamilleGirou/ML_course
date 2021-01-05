@@ -262,7 +262,7 @@ Happen But You Will Be A Few Regrets But You Will Be A Few Tears Before Bedtime 
 
 This prediction is good and we can also find some words corresponding to horscope lexical like 'Regrets','Overactive','Imagination', 'Generosity' and 'Sucess'. Once again the grammar is wrong and we can't really distinguish a sentence. But we can find some correct assotiation of words like 'Don T worry about', 'Your Overactive Imagination', 'You Are Not Entitled' and 'That S Okay You Will Be Looking to your Generosity'.
 
-### **Step 5: Results analysis **
+### **Step 5: Results analysis**
 
 We use the last example to make an analysis. We focus on the first word predicted to complete the original sentence. Our goal is to find out if the words with the highest probability of being chosen by the model are logical. The word predicted is 'Happen' and seems to make sense, especially if we focus on the meaning of the last word "you choose to make it happen".
 
