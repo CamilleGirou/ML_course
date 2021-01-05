@@ -1,5 +1,8 @@
 # **MATHEMATICS OF DEEP LEARNING ALGORITHMS 2 - Final Project**
 # ***TEXT GENERATION: Algorithm for sign-specific horoscopes generation***
+
+The aim of this project is to predict horoscopes for a chosen astrological sign. It was conducted for the Machine Learning course. The authors are: Lauriane Ramuzat and Camille Girou.
+
 ## **PART 1: Data Preprocessing**
 ### **Step 1: Dataset import**
 
@@ -30,7 +33,7 @@ Example: horoscope for aries on the 12 january 2013:
 
 To carry out our project, we look to see if all the signs are well represented in our dataset. We obtain the following result:
 
-TABLEAU
+![table1](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/tableau%20proportion%20all%20data%201.PNG)
 
 Hence, each sign is represented by on average 1080 horoscope examples. 
 The small differences between signs suggest that some sign's horoscopes were not scrapped from the NY post website on several dates. 
@@ -67,7 +70,11 @@ We will propose two analysis ways:
 This method requires to use the version of cleaned predictions which does not include the horoscope specific stopword.
 
 *   **TF-IDF analysis** which highlights the most used representative words for a sign, by taking into account both the frequency of each word in the sign corpus and the specificity of these words to this sign corpus comparing to other signs ones. 
-Hence for this method we used the horoscope predictions set without removing the horoscope specific stopwords because they should not be consider as important words since they appears in all sign corpus.
+Hence for this method we used the horoscope predictions set without removing the horoscope specific stopwords because they should not be consider as important words since they appears in all sign corpus. 
+
+Here an example of TF-IDF vector:
+
+![table2](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/example%20tf-idf.PNG)
 
 
 We use the second cleaning function to do these study.
@@ -75,20 +82,27 @@ We use the second cleaning function to do these study.
 
 **Method 1: Most frequent words**
 
-The first method gives us the following wordcloud (for the 20 more frequent word):
-Examples for ....
-IMAGE
+The first method gives us the following wordcloud (for the 20 more frequent words):
+
+Examples for the signs taurus and cancer:
+
+![picture1](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/taurus%20freq.PNG)
+![picture2](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/cancer%20freq.PNG)
 
 This direct method does not yield satisfying results: most frequent words among the horoscope of each sign are similar and do not give explicit clue about sign's specificities.
 
 
 **Method 2: TF-IDF analysis**
 
-We display the TF-IDF wordcloud associated to EXAMPLE of the list of the 20 words with higher TF-IDF scores.
+We display the TF-IDF wordcloud associated to taurus and cancer of the list of the 20 words with higher TF-IDF scores:
+
+![picture3](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/tfidf%20taurus.PNG)
+![picture4](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/tfidf%20cancer.PNG)
 
 This method produces interesting results since each signs is associated with a different set of words that we expect to be related to the personality of this sign.
 
 Here is some TF-IDF comparison with sign personnality traits according to the websites: 
+
 http://nuclear.ucdavis.edu/~rpicha/personal/astrology/
 
 https://blog.prepscholar.com/cancer-traits-personality 
@@ -159,11 +173,11 @@ Hence it makes sense to building a text generator algorithm able to take into ac
  
  **Train set composition**
  
- TABLEAU
+ ![table3](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/train%20composition.PNG)
  
  **Test set composition**
  
- TABLEAU
+ ![table4](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/test%20composition.PNG)
  
  Our datasets have a god composition and all the signs are well represented.
  We use the third cleaning function to have logical sentences.
@@ -203,6 +217,12 @@ It includes:
 *   An *output layer* with a *softmax activation function*
 
 The optimizer used is *ADAM* and the loss minimized is the *categorical cross-entropy*. 
+
+We chose to use epoch equal to 100 and batch size equal to 128.
+
+We have the following model:
+
+![table4](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/model.PNG)
 
 **Function *generate_text*** 
 
@@ -257,3 +277,10 @@ It is particularly usefull since the computational time required for the model t
 The first function build and train the model. The second one generate and display the prediction.
 
 Here an example of result for the sign Aries and 100 generated words:
+
+
+
+
+## **PART 3: Conclusion**
+
+
