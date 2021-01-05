@@ -1,7 +1,7 @@
 # **MATHEMATICS OF DEEP LEARNING ALGORITHMS 2 - Final Project**
 # ***TEXT GENERATION: Algorithm for sign-specific horoscopes generation***
 
-The aim of this project is to predict horoscopes for a chosen astrological sign. It was conducted for the Machine Learning course. The authors are: Lauriane Ramuzat and Camille Girou.
+The aim of this project is to predict horoscopes for a chosen astrological sign. It was conducted for the Machine Learning course. For computational power reasons, the code was executed with the help of Google colab. The authors are: Lauriane Ramuzat and Camille Girou.
 
 ## **PART 1: Data Preprocessing**
 ### **Step 1: Dataset import**
@@ -64,10 +64,7 @@ The goal is to display under a illustrative form the most relevant words for eac
 
 We aim at generating horoscope according to the choosen sign, which makes sense if each sign is characterized prediction consistence with its supposed personnality traits. 
 
-We will propose two analysis ways: 
-
-*   **"Most frequent words" analysis** which basically consist in highlighting the most used words for each sign mamong all the available horoscope prediction examples.
-This method requires to use the version of cleaned predictions which does not include the horoscope specific stopword.
+We will use: 
 
 *   **TF-IDF analysis** which highlights the most used representative words for a sign, by taking into account both the frequency of each word in the sign corpus and the specificity of these words to this sign corpus comparing to other signs ones. 
 Hence for this method we used the horoscope predictions set without removing the horoscope specific stopwords because they should not be consider as important words since they appears in all sign corpus. 
@@ -76,28 +73,12 @@ Here an example of TF-IDF vector:
 
 ![table2](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/example%20tf-idf.PNG)
 
-
 We use the second cleaning function to do these study.
-
-
-**Method 1: Most frequent words**
-
-The first method gives us the following wordcloud (for the 20 more frequent words):
-
-Examples for the signs taurus and cancer:
-
-![picture1](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/taurus%20freq.PNG)
-![picture2](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/cancer%20freq.PNG)
-
-This direct method does not yield satisfying results: most frequent words among the horoscope of each sign are similar and do not give explicit clue about sign's specificities.
-
-
-**Method 2: TF-IDF analysis**
 
 We display the TF-IDF wordcloud associated to taurus and cancer of the list of the 20 words with higher TF-IDF scores:
 
-![picture3](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/tfidf%20taurus.PNG)
-![picture4](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/tfidf%20cancer.PNG)
+![](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/tfidftaurus.png)
+![](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/cancertfidf.png)
 
 This method produces interesting results since each signs is associated with a different set of words that we expect to be related to the personality of this sign.
 
@@ -155,11 +136,11 @@ Obtained characteristics of the Taurus:
     - plunge & better & far
     - thing
  
-This comparison seems also quite accurate. 
+This comparison seems also quite correct. 
  
  **Conclusion Step 3**
  
- The horoscope predictions from our dataset seems to be at least partially sign-specifics since the TF-IDF methods (which also takes into account that a word is rare among the other text of the corpus) highlights different words for each sign. Moreover these words seems to be linked to the personality traits of each sign. 
+The horoscope predictions from our dataset seems to be at least partially sign-specifics since the TF-IDF methods (which also takes into account that a word is rare among the other text of the corpus) highlights different words for each sign. Moreover these words seems to be linked to the personality traits of each sign. 
 
 Hence it makes sense to building a text generator algorithm able to take into account the sign to produce the horoscope. 
 
@@ -222,7 +203,7 @@ We chose to use epoch equal to 100 and batch size equal to 128.
 
 We have the following model:
 
-![table4](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/model.PNG)
+![table5](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/model.PNG)
 
 **Function *generate_text*** 
 
@@ -230,12 +211,30 @@ Generate new sentences containing a requested number of words, from a initial te
 This function takes an initial horoscope prediction (from the initial dataset, in generak from a test set independent from the training set).
 It returns the initial horoscope predictions extended by a certain number (controlled by the argument *next_words*) of new predicted words which form the artificially generated horoscope. 
 
-### **Step 3: Test of the text generation model**
 
-This step consists in implemented the above model for an arbitrarly choosen sign to check the execution and evaluate the results of the generative functions introduced previously. 
+Then, we implement the above model for an arbitrarly choosen sign to check the execution and evaluate the results of the generative functions introduced previously. 
 
-If the model is consider satisfying, the last step would be to implement a global horoscope generator function. 
- 
+As the model is consider satisfying, the last step is to implement a global horoscope generator function.
+
+
+### **Step 3: Global horoscope prediction function**
+
+**Global function 1**
+
+With this function, the previously defined functions are grouped together. We  just have to choose the sign we want to predict the horoscope for and the number of words we want to generate.
+
+**Global function(s) 2: One can also prefer using 2 separate functions: one to build and train the model and one to predict.**
+
+We create two new functions to re-use a trained model if we want to make several predictions for the same size and sign. 
+
+It is particularly usefull since the computational time required for the model to be trained is quite long.
+
+The first function build and train the model. The second one generate and display the prediction.
+
+### **Step 4: Examples of predicted horoscope**
+
+**First Example**
+
 We can display an example for the sign Aries, we choose to generate 100 additional words. We have the following result:   
  
 **Original sentence :**
@@ -247,40 +246,51 @@ You Are Wasting Too Much Time And Too Much Energy On Things Of No Importance  Th
 That You Are Doing You Will Be Able To Explain What You Are Doing You Will Be Doing You Will Pays Alongside Alike Are Anywhere Games Perfectly Deals You Arrives Begs Alongside Is Not A Lot Alongside Calmly In The Moment But Wherever You Have To Do It Is A Danger And Therefore Be A Bit Of The Most Dynamic Area Of Your Chart Today You Will Be A Bit Of The Most Dynamic Area Of Your Chart Today You Will Be A Bit Alongside Alike Pays On The Past And Putting Your Way And Energy On You Will Be
 
 
-This result is quite good and we can find some words corresponding to horscope lexical like 'Danger','Past','Energy' and 'Camly'. Most of the grammar is wrong and we can't really distinguish a sentence. The end of prediction seems to be a repetition of the previous words.
+This result is quite good and we can find some words corresponding to horscope lexical like 'Danger','Past','Energy' and 'Calmly'. Most of the grammar is wrong and we can't really distinguish a sentence. However we can find some good words combination like 'You Will Be Able To Explain What You Are Doing', 'In The Moment' and 'You Have To Do It'. The end of prediction seems to be a repetition of the previous words.
 
+**Second Example**
 
-### **Step 4: Global horoscope prediction function**
-
-**Global function 1**
-
-With this function, we just have to choose the sign we want to predict the horoscope for and the number of word we want to generate.
-
-Here an example of output with the sign cancer and 100 words generated:
+ We can show an example of output with the sign gemini and 100 words generated:
 
 **Original sentence :**
 
-What You Expect To Happen Today And Over The Weekend Most Likely Won T  While What You Don T Expect To Happen Most Likely Will  In Which Case There Is No Point Making Plans As They Are Certain To Change  Take Life As It Comes 
+Attitude Is Everything  If You Think That A Task Will Be Boring Then Most Likely It Will Be  However  If You Approach The Same Task With Confidence And A Sense Of Adventure You Will Find Ways To Make It Fun Life Is What You Choose To Make It   
 
 **Prediction:**
 
-To The Wind You Will Get It Easy To Get To The End Of The That You Will Be Amazed If You Are Smart You To To You Regret A Few A Direction That Is You To To Get To What To To You To To Do A Idea On To You To To You To To You To To You To To You To To You To To You To To You To To You To To You To To You To To You To To You To To You To To You To To You To To You
+Happen But You Will Be A Few Regrets But You Will Be A Few Tears Before Bedtime The First Only Your Overactive Imagination Stake You Have Been The Chance To Make It Happen But Don T Worry About You Can Do You Down Again And Because You Are Not Entitled To Be A Bit On The Most Of The Coming Week And That S Okay You Will Be Looking To Your Generosity Is Not A Case To Refuse It You Can Do It You Are Not A Livewire High You Will Be A Resounding Success If You Want To Be
 
-This result is not as good as the first one but we can still find some words corresponding to horscope lexical like 'Direction' and 'Regret'. Once again the grammar is wrong and we can't really distinguish a sentence. We find the repetition of the sames words at the end of the prediction, even more than previously.
+This prediction is good and we can also find some words corresponding to horscope lexical like 'Regrets','Overactive','Imagination', 'Generosity' and 'Sucess'. Once again the grammar is wrong and we can't really distinguish a sentence. But we can find some correct assotiation of words like 'Don T worry about', 'Your Overactive Imagination', 'You Are Not Entitled' and 'That S Okay You Will Be Looking to your Generosity'.
 
-**Global function(s) 2: One can also prefer using 2 separate functions: one to build and train the model and one to predict.**
+### **Step 5: Results analysis **
 
-We create two new functions to re-use a trained model if we want to make several predictions for the same size and sign. 
+We use the last example to make an analysis. We focus on the first word predicted to complete the original sentence. Our goal is to find out if the words with the highest probability of being chosen by the model are logical. The word predicted is 'Happen' and seems to make sense, especially if we focus on the meaning of the last word "you choose to make it happen".
 
-It is particularly usefull since the computational time required for the model to be trained is quite long.
+We want to look at which other words the algorithm predicted as likely in this context. 
 
-The first function build and train the model. The second one generate and display the prediction.
+* The table below lists, by decreasing probability order, the **20 most likely words predicted by the model** to be the first word to complete the initial horoscope sentence. 
 
-Here an example of result for the sign Aries and 100 generated words:
+![table6](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/word%20proba.PNG)
 
+The word which is selected by the algorithm, "happen", has a probability of 0.15, which is large in comparison of the next more likely word (with probability 0.055) and which is also large according to the total size of the vocabulary (3759 words). 
 
+**Graphical representation of the most propable first word propose by the model**
+
+We can also display a graphical representation of these words.
+
+![picture3](https://github.com/LaurianeRamuzat/ML_course/blob/main/pictures/words%2020.PNG)
+
+The above graph illustrates the high probability obtained by the word "happen", selected by the model, in comparison of the probabilities obtained by the other words detected as likely by the model to be firts new word added to the initial sentence.
+
+Moreover, these probabilities and this ranking seems meaningfull, since there is several verbs (logical after the pronoun "it"). Some other words makes sense with the expression "make it" such that "make it easy" or "make it right". Finally, some other word have high probabilities because they are frequently used in the initial horoscope sentences used to train the model, such that "you" for example.
 
 
 ## **PART 3: Conclusion**
 
+The horoscope generate model that we have implemented yields interesting results as it is able to select a sequence of words to complete a real horoscope prediction. The context of the previous sentence seems to be partially understanded by the model since the new sentence generated included meaningfull structures according to this context. 
 
+The main drawback of the method arise when we try to generate long sentences since several word repetitions appears at the end of the generated sentences including more than 50 to 100 words. 
+
+Finally the execution time required to train the model is important, which also constitues a drawback, especially to produce sign-specific predictions which requires to train independently the model for each sign. 
+
+In a nutshell, it would be interesting to investigate other model spedificaton, such that bidimensional LSTM, to see whether it could improve our results.
