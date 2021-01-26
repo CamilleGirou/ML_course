@@ -175,7 +175,7 @@ Transformation of original sentences into N-Grams tokens
 
 Transformation of N-Grams token into padded vectors (predictors and label, i.e. the next word of the initial sentence).
 The set of tokens sequences might include sequences of different lengths. Before starting training the model, we need to pad the sequences and make their lengths equal. 
-The function creted an input vector, which contains same length N-grams sequence build from the corpus, and a label vector, which is the next word of the N-gram, which can be used for the training purposes.
+The function creted an input vector, which contains same length N-grams sequence build from the corpus, and a label vector, which is the next word of the N-gram, which can be used for the training purposes. 
 
 **Function *prep_LSTM***
 
